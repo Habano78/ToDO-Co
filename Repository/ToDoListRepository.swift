@@ -1,5 +1,9 @@
+
+//This code handles saving and loading todo items from a JSON file (the rest of your app doesn't need to know these implementation details). If I later decide to change how is store the data (for example, switching from JSON files to a database or cloud storage), you only need to modify the repository, not the rest of your app.
+
 import Foundation
 
+//Defines a protocol (ToDoListRepositoryType) that specifies what operations are available (loading and saving todo items)
 protocol ToDoListRepositoryType {
     func loadToDoItems() -> [ToDoItem]
     func saveToDoItems(_ toDoItems: [ToDoItem])

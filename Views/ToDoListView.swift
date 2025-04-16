@@ -2,21 +2,29 @@ import SwiftUI
 
 struct ToDoListView: View {
     @ObservedObject var viewModel: ToDoListViewModel
+        
     @State private var newTodoTitle = ""
     @State private var isShowingAlert = false
     @State private var isAddingTodo = false
     
-    // New state for filter index
-    @State private var filterIndex = 0
-    
     var body: some View {
         NavigationView {
-            VStack {
-                // Filter selector
-                // TODO: - Add a filter selector which will call the viewModel for updating the displayed data
-                // List of tasks
+                VStack (spacing:0) {
+                        
+                        // Sélecteur de filtre (enum)
+                        Picker("Filter", selection: $viewModel.currentFilter) {
+                            ForEach(ToDoListFilter.allCases) { filter in
+                                Text(filter.title).tag(filter)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.horizontal)
+                        .padding(.bottom, 10)
+
+                        // Liste des tâches filtrées
+                        
                 List {
-                    ForEach(viewModel.toDoItems) { item in
+                    ForEach(viewModel.filteredToDoItems) { item in
                         HStack {
                             Button(action: {
                                 viewModel.toggleTodoItemCompletion(item)
@@ -34,7 +42,7 @@ struct ToDoListView: View {
                     }
                     .onDelete { indices in
                         indices.forEach { index in
-                            let item = viewModel.toDoItems[index]
+                            let item = viewModel.filteredToDoItems[index]
                             viewModel.removeTodoItem(item)
                         }
                     }
