@@ -1,14 +1,9 @@
 import SwiftUI
 
-/// ViewModel : lien entre la vue SwiftUI et les données de l'application.
-/// Gère l'état observable, la logique métier et la persistance des données.
 final class ToDoListViewModel: ObservableObject {
-
-    // MARK: - Propriété privée
-    /// Le repository permet de charger et sauvegarder les données
     private let repository: ToDoListRepositoryType
 
-    // MARK: - Initialisation
+    // MARK: - Init
     init(repository: ToDoListRepositoryType) {
         self.repository = repository
         self.toDoItems = repository.loadToDoItems()
