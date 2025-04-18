@@ -10,8 +10,8 @@ struct ToDoListView: View {
     var body: some View {
         NavigationView {
                 VStack (spacing:0) {
-                        
                         // Sélecteur de filtre (enum)
+                        //le Picker est lié (binding) à la propriété observable currentFilter du ViewModel.
                         Picker("Filter", selection: $viewModel.currentFilter) {
                             ForEach(ToDoListFilter.allCases) { filter in
                                 Text(filter.title).tag(filter)
@@ -47,7 +47,6 @@ struct ToDoListView: View {
                         }
                     }
                 }
-                
                 // Sticky bottom view for adding todos
                 if isAddingTodo {
                     HStack {
@@ -55,7 +54,7 @@ struct ToDoListView: View {
                             .padding(.leading)
 
                         Spacer()
-                        
+
                         Button(action: {
                             if newTodoTitle.isEmpty {
                                 isShowingAlert = true
